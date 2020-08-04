@@ -1,0 +1,14 @@
+Checks: "
+-*,
+cppcoreguidelines-*,
+clang-analyzer-*,
+cert-*,
+bugprone-*,
+hicpp-*,
+modernize-*,
+-modernize-use-trailing-return-type,
+-performance-*,
+portability-*,
+-hicpp-braces-around-statements,
+-modernize-use-nodiscard,
+"

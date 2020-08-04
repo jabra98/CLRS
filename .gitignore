@@ -1,0 +1,7 @@
+build
+latex/build
+compile-commands.json
+.vimsetup
+.vscode
+.clangd
+.cache

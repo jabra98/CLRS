@@ -1,0 +1,234 @@
+
+\documentclass[11pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{listings}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\small\color{blue},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4
+}
+
+\author{Jörg Barkoczi}
+\title{\vspace{-2.0cm}Chapter 2 Problem Solutions}
+\date{ }
+
+\begin{document}
+\maketitle
+\section*{2-2 \textit{Correctness of bubblesort}}
+\begin{enumerate}[label=\alph*)]
+    \item
+        What we need to prove:
+        \begin{itemize}
+            \item
+                valid loop invariant
+                \begin{itemize}
+                    \item Initialization
+                    \item Maintenance
+                    \item Termination
+                \end{itemize}
+            \item
+                that it contains all original elements.
+        \end{itemize}
+    \item
+        \textbf{Loop invariant (2-4)}:
+
+        The for-loop in lines 2-4 will maintain a loop invariant
+        such that the element at position $A[j]$ will be the smallest
+        in the subarray $A[n-j]$.
+
+        \textbf{Initialization}:: $A[n-j]$ will contain a single element, thus it'll be the smallest.
+
+        \textbf{Maintenance}: If $A[j-1] > A[j]$, both will be swapped, thus maintaining the
+        loop invariant.
+       
+        \textbf{Termination}: Element $A[j]$ will be the smallest in the subsequence $A[n-j]$.
+
+   \item
+       \textbf{Loop invariant (1-4)}:
+
+        Each iteration sorts the sequence, such that the $i$th smallest element will 
+        be on the $i$th position. This will partition the sequence in the following 
+        subsequences after each iteration:\\~\\
+        $A[1...i]$ which is sorted such that $A[1] \leq A[2] \leq \dots \leq A[i]$.\\
+        $A[i+1 \dots n]$ which is unsorted.
+
+        In the end the $n-1$ smallest elements will be positioned at positions 
+        $A[1 \dots n-1]$ respectively, thus leaving the $n$th smallest element - which
+        is the biggest - at position $n$.
+
+        \textbf{Initialization}: $i = 1$, therefore $A[1\dots i]$ contains only a
+        single element, which is trivially sorted.
+
+        \textbf{Maintenance}: $i$ is incremented, thus fullfilling the loop invariant 
+        yielding a sorted subarray $A[1\dots i]$.
+
+        \textbf{Termination}: When $i = n-1$, the sorted subsequence will be of size
+        $n - 1$ and will contain the $n-1$th smallest elements, thus leaving the last 
+        element $A[n]$ which must be the largest.
+
+    \item
+        The worst case running time occurs everytime, because regardless of how sorted
+        the sequence already is, the inner loop will always iterate $n-i+1$ times, thus
+        giving a total runtime of:
+        \begin{equation}
+            \Theta ((n-1)(n-i+1)) \Leftrightarrow \Theta(n^2-ni+i-1) \equiv \Theta(n^2)
+        \end{equation}
+\end{enumerate}
+\pagebreak
+\section*{2-3 - \textit{Correctness of Horner's rule}}
+\begin{enumerate}[label=\alph*)]
+    \item
+        The running time of the given codefragment is $\Theta (n)$.
+    \item
+        ~\\
+        \begin{lstlisting}
+        template<typename X>
+        long double naive_polynomial_evaluator(const X x, const std::vector<int>& arr2)
+        {
+            std::vector<int> powers(arr2.size());
+
+            powers[0] = 1;
+            powers[1] = x;
+            for (int i = 2; i < powers.size(); ++i)
+            {
+                powers[i] = x * powers[i-1];
+            }
+            long double y = 0;
+
+            for (int i = 0; i < arr2.size(); ++i)
+            {
+                y += arr2[i] * std::pow(x, arr2.size() - 1 - i);
+            }
+
+            return y;
+        }
+        \end{lstlisting}
+        The running time of this algorithm is $\Theta (n^2)$ and thus clearly slower 
+        than Horner's rule.
+    \item
+        Let $y'$ denote the value of $y$ after each iteration.\\
+        Given that $y' = a_i + xy$ and $y = \sum_{k=0}^{n-(i+1)} a_{i+k+1}x^k$ we 
+        can rewrite it as \\$y'=a_i + x \sum_{k=0}^{n-(i+1)} a_{i+k+1}x^k\\
+        \Leftrightarrow
+        a_i + \sum_{k=0}^{n-(i+1)} a_{i+k+1}x^{k+1}\\
+        \Leftrightarrow
+        a_i x_0 + \sum_{k=0}^{n-(i+1)} a_{i+k+1}x^{k+1}\\
+        \Leftrightarrow
+        \sum_{k=-1}^{n-(i+1)} a_{i+k+1}x^{k+1}\\
+        \Leftrightarrow
+        \sum_{k=0}^{n-i} a_{i+k}x^{k}\\
+        $
+        Now at termination where $i = 0$, we get
+        \begin{equation}
+        \sum_{k=0}^{n-0} a_{0+k}x^{k} \Leftrightarrow \sum_{k=0}^{n} a_{k}x^{k}
+        \end{equation}
+        which is indeed the same as the given summation.
+    \item
+        As we have just proved, we can say that the given code fragment correctly
+        evaluates a polynomial characterized by the coefficients $a_0,a_1,\dots,a_n$.
+\end{enumerate}
+\pagebreak
+\section*{2-4 - \textit{Inversions}}
+\begin{enumerate}[label=\alph*)]
+    \item
+    The five inversions of the array ${2,3,8,6,1}$ are as follows:
+        \begin{enumerate}
+            \item (8,6)
+            \item (2,1)
+            \item (3,1)
+            \item (8,1)
+            \item (6,1)
+        \end{enumerate}
+    \item
+        An array from the set ${1,2,\dots,n}$ has the most inversions, if it has the 
+        property $A[n]>A[n-1]>\dots>A[1]$. It will have $\frac{n(n-1)}{2}$ inversions.
+    \item
+        Each inversion corresponds to an iteration of the inner loop in the insertion sort
+        algorithm.\\
+        Given an array $A[1\dots n]$ and a function $I(x)$ which takes an element of A
+        and outputs the number of inversion for that element, we in total have 
+        $\sum_{i=1}^{n} I(A[i])$ iterations of the inner loop.
+     \item
+         ~\\
+        Given the hint of modifying our existing merge sort algorithm, we can 
+        add another statement of constant time on line 33, which calculates the remaining
+        elements in array $v1$ - which is left of $v2$ - and thus reflects the number
+        of inversions for element $v2[j]$. We also change the return value to the number 
+        of inversions, such that it adds up and propagates through the recursion. Since we 
+        only added operations of constant time, the worst case running time of the algorithm stays at
+        $\Theta (nlgn)$ and thus satisfies the required worst case running time.
+        \begin{lstlisting}
+        template<typename T>
+        int merge(std::vector<T>& v, int l, int r, int p)
+        {
+            int s1 = p - l + 2;
+            int s2 = r - p + 1;
+
+            std::vector<T> v1(s1);
+            for (int i = 0; i < s1-1; ++i)
+            {
+                v1[i] = v[l+i];
+            }
+            v1[s1-1] = std::numeric_limits<T>::max();
+
+            std::vector<T> v2(s2);
+            for (int i = 0; i < s2-1; ++i)
+            {
+                v2[i] = v[p+i+1];
+            }
+            v2[s2-1] = std::numeric_limits<T>::max();
+            
+            int inv = 0;
+            int i = 0;
+            int j = 0;
+            for (int a = l;a <= r; ++a)
+            {
+                if (v1[i] <= v2[j])
+                {
+                    v[a] = v1[i++];
+                }
+                else
+                {
+                    v[a] = v2[j++];
+                    inv += s1 - i - 1;
+                }
+            }
+            return inv;
+        }
+
+        template<typename T>
+        int merge_sort(std::vector<T>& v, int l, int r)
+        {
+            auto inv = 0;
+            if (l < r)
+            {
+                int p = (l + r) / 2;
+                inv += merge_sort(v, l, p);
+                inv += merge_sort(v, p+1, r);
+                inv += merge<T>(v, l, r, p);
+            }
+            return inv;
+        }
+        \end{lstlisting}
+\end{enumerate} 
+\end{document}

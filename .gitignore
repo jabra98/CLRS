@@ -1,6 +1,7 @@
 build
 latex/build
-compile-commands.json
+latex/aux
+compile_commands.json
 .vimsetup
 .vscode
 .clangd

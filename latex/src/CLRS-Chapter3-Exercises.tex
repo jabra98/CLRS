@@ -5,6 +5,12 @@
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+
 
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -32,6 +38,8 @@
 \title{\vspace{-2.0cm}Chapter 3 Exercise Solutions}
 \date{ }
 
+\newcommand{\lra}{\Leftrightarrow}
+
 \begin{document}
 \maketitle
 
@@ -47,16 +55,40 @@
 \subsubsection{}
 Let $f(n)$ and $g(n)$ be asymptotically nonnegative functions. Using the basic
 definition of $\Theta$-notation, prove that $max(f(n), g(n)) = \Theta (f(n) + g(n))$.
-~\\~\\
+\\~
+
 Given constants $c_1$, $c_2$ and $n_0$, a function $(m(n) = max(f(n), g(n))) \in
 \Theta (f(n) + g(n))$ if and only if $ 0 \leq c_1(f(n) + g(n)) \leq m(n) \leq c_2(f(n) + g(n))$.
-~\\
 Since $m(n) \leq f(n) + g(n)$ we already have an upper bound to work with and can thus default
-$c_1$ to just $1$.\\ 
+$c_2$ to just $1$.
+
 For the lower bound we can just take the factor $min({\frac{f(n)}{f(n) + g(n)}, \frac{g(n)}{f(n) + g(n)}})$, which
 shrinks the expression $f(n) + g(n)$ to $min(f(n), g(n))$ and therefore is always smaller or equal to $max(f(n), g(n))$.
-~\\
+
 And thus our function $m(n)$ satisfies $0 \leq min({\frac{f(n)}{f(n) + g(n)}, \frac{g(n)}{f(n) + g(n)}}) (f(n) + g(n))
 \leq m(n) \leq f(n) + g(n), \forall n > 0$ and is indeed in the set of functions described by $\Theta(f(n) + g(n))$.
 
+\subsubsection{}
+Show that for any real constants $a$ and $b$, where $b > 0$,
+\[(n+a)^b = \Theta(n^b).\]
+Let us start by showing that $(n+a)^b = O(n^b)$. This requires us to find constants $c, n_0$
+such that 
+\[0 \leq (n+a)^b \leq cn^b, \forall n \geq n_0.\]\\
+Let $c = 2^b$ 
+\[\lra (n+a)^b & \leq (2n)^b\]
+and thus we have $(n+a)^b \leq (2n)^b, \forall n \geq n_0 = |a|$ which implies 
+\[(n+a)^b = O(n^b).\]
+
+Next we need to show that $(n+a)^b = \Omega(n^b)$, which again 
+requires us to find constants $c, n_0$ such that
+\[0 \leq cn^b \leq (n+a)^b, \forall n \geq n_0.\]\\
+Let $c=(\frac{1}{2})^b$
+\begin{equation*}
+    \begin{split}
+        \lra (n+a)^b & \geq (\frac{1}{2}n)^b\\
+    \end{split}
+\end{equation*}
+and thus we have $(n+a)^b \geq (\frac{1}{2}n)^b, \forall n \geq n_0 = 2|a|$ which implies 
+\[(n+a)^b = \Omega(n^b).\]
+And therefore, by Theorem 3.1, $(n+a)^b = \Theta(n^b)$.
 \end{document}

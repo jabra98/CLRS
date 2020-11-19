@@ -40,6 +40,7 @@
 
 % change \iff to the shorter version
 \renewcommand{\iff}{\Leftrightarrow}
+\renewcommand{\implies}{\Rightarrow}
 
 \begin{document}
 \maketitle
@@ -242,19 +243,32 @@ Proof equation (3.16).
 \]
 
 \subsubsection{}
-Prove equation 3.19 ($\ln(n!) = \Theta(n \ln n)$). Also prove that
-$n! = \omega(3^n)$ and $n! = o(n^n)$.\\
+Prove equation 3.19 $\lg(n!) = \Theta(n \lg n)$. Also prove that
+$n! = \omega(2^n)$ and $n! = o(n^n)$.\\
 
-Something with Sterlings approximation
+Let us start with equation \textbf{3.19} and by showing its membership
+to $O(n \lg n)$.
+
+Let $c$ be some positive real constant, then
 \[
-    n! = \sqrt{2 \pi n}{\left(\frac{n}{e}\right)}^n e^{a_n}
+\begin{split}
+    & \lg(n!) \in O(n \lg n) \\
+    & \iff 0 \leq \lg(n!) \leq c n \lg n \\
+    & \iff \lg (n^n) \leq c n \lg n \\
+    & \iff n \lg n \leq c n \lg n
+\end{split}
 \]
-where 
+holds for all $n \geq n_0 = 1$ if $c >= 1$.
+
+Now we will need to additionally show that $\lg(n!)$ is also
+a member of $\Omega(n \lg n)$.
+
+Again let $c$ be some positive real constant, then
 \[
-    \frac{1}{12n+1} < a_n < \frac{1}{12n}.
+\begin{split}
+    & \lg(n!) \in \Omega(n \lg n) \\
+    & \iff 0 \leq c n \lg n \leq \lg(n!) \\
+\end{split}
 \]
-
-
-
 
 \end{document}

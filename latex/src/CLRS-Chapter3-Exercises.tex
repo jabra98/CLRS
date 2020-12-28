@@ -14,6 +14,7 @@
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
 \numberwithin{equation}{section}
+\setlength{\parindent}{0em}
 
 \lstset{
   language=C++,
@@ -258,17 +259,115 @@ Let $c$ be some positive real constant, then
     & \iff n \lg n \leq c n \lg n
 \end{split}
 \]
-holds for all $n \geq n_0 = 1$ if $c >= 1$.
+holds for all $n \geq n_0 = 1$ if $c >= 1$.\\
 
 Now we will need to additionally show that $\lg(n!)$ is also
 a member of $\Omega(n \lg n)$.
-
 Again let $c$ be some positive real constant, then
 \[
 \begin{split}
     & \lg(n!) \in \Omega(n \lg n) \\
-    & \iff 0 \leq c n \lg n \leq \lg(n!) \\
+    & \iff 0 \leq c n \lg n \leq \lg(n!), \; \forall n > n_0.\\
 \end{split}
 \]
+By Sterling's approximation we have
+\[
+\begin{split}
+    & c n \lg n \leq \lg(n!)\\
+    & \iff cn \lg n
+        \leq \lg \left(\sqrt{2\pi n}\left(\frac{n}{e}\right)^n \cdot e \right) \\
+    & \iff cn \lg n \leq \frac{1}{2} (\lg {2\pi} + \lg n) + n\lg n - n\lg e + \lg e.\\
+\end{split}
+\]
+Let $c = 0.5$, then we have
+\[
+\begin{split}
+    0 \leq \frac{1}{2} (\lg {2\pi} + \lg n) + \frac{n}{2} \lg n - n\lg e + \lg e, 
+\end{split}
+\]
+which is positive as long as $\frac{n}{2} \lg n - n\lg e$ is positive.\\
+\pagebreak
+
+Therefore 
+\[
+\begin{split}
+    & \frac{n}{2} \lg n - n\lg e \geq 0\\
+    & \iff \frac{n}{2} (\lg n - 2\lg e) \geq 0\\
+    & \iff \lg n - 2\lg e \geq 0\\
+    & \iff n \geq 2^{2\lg e},\\
+\end{split}
+\]
+and thus there exists $c = 0.5$ such that 
+\[
+    0 \leq \frac{1}{2} (\lg {2\pi} + \lg n) + \frac{n}{2} \lg n - n\lg e + \lg e, 
+\]
+for all $n \geq n_0 = 2^{2 \lg e}$, and therefore $\lg (n!)$ is 
+also element of $\Omega (n \lg n)$, which by Theorem 3.1 is equivalent to
+$\lg(n!) \in \Theta(n \lg n)$.\\
+
+\textit{Prove} $n! = o(n^n)$.
+
+We need to show that
+\[
+    \lim_{n \to \infty} \frac{n^n}{n!} = \infty,
+\]
+or alternatively 
+\[
+    \lim_{n \to \infty} \frac{n!}{n^n} = 0.
+\]
+
+We can again make use of Sterling's approximation, such that we have
+\[
+\begin{split}
+    & \frac{n^n}{\sqrt{2\pi n} {\left(\frac{n}{e}\right)}^n 
+            \left(1+\Theta(\frac{1}{n})\right)} \\
+    =& \frac{e^n}{\sqrt{2\pi n} \left(1+\Theta \left(\frac{1}{n}\right)\right)} \\
+    =& \frac{e^n}{\sqrt{2\pi n} \Theta\left(\frac{\sqrt{2\pi n}}{n}\right)} \\
+    =& \frac{e^n}{\Theta\left(\frac{{\sqrt{2\pi n}}^2}{n}\right)} \\
+    =& \frac{e^n}{\Theta (2 \pi)} \\
+    =& \frac{e^n}{\Theta (1)} \\
+\end{split}
+\]
+now looking at the limit we have
+\[
+    \lim_{n \to \infty} \frac{e^n}{\Theta (1)} = \infty.
+\]
+
+\pagebreak
+\textit{Prove} $n! = w(n^n)$.
+
+We need to show that
+\[
+    \lim_{n \to \infty} \frac{2^n}{n!} = 0,
+\]
+or alternatively 
+\[
+    \lim_{n \to \infty} \frac{n!}{2^n} = \infty.
+\]
+Using Sterling's approximation again, we get 
+\[
+\begin{split}
+    & \frac{2^n} {\sqrt{2\pi n}{\left(\frac{n}{e}\right)}^n 
+            \left(1+\Theta(\frac{1}{n})\right)} \\
+    =& \frac{{(2e)}^n} {\sqrt{2\pi n} \, n^n
+            \left(1+\Theta(\frac{1}{n})\right)} \\
+    =& \frac{{(2e)}^n} {\sqrt{2\pi n} \left( n^n + \Theta(n^{n-1})\right)} \\
+    =& \frac{{(2e)}^n} {\sqrt{2\pi n} \Theta(n^{n-1})} \\
+    =& \frac{{(2e)}^n} {\sqrt{2\pi n} \Theta(n^{n})} \\
+    =& \frac{{(2e)}^n} {\Theta(\sqrt{n}) \Theta(n^{n})} \\
+    =& \frac{{(2e)}^n} {\Theta(\sqrt{n} \, n^{n})} \\
+    =& \frac{{(2e)}^n} {\Theta(n^{n + \frac{1}{2}})} \\
+    =& \frac{2e} {\Theta(n^{2n^{-1} + 1})} \\
+\end{split}
+\]
+Now looking at the limit, we have
+\[
+    \lim_{n\to\infty} \frac{2e}{\Theta(n^{2n^{-1}+1})} = \frac{2e}{n} = 0.
+\]
+
+
+
+
+
 
 \end{document}

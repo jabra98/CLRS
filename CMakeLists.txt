@@ -14,4 +14,5 @@ add_executable(clrs ${src})
 target_link_libraries(clrs PRIVATE
                 pthread
                 ncurses
-                fmt)   
+                fmt
+                )   

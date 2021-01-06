@@ -365,9 +365,70 @@ Now looking at the limit, we have
     \lim_{n\to\infty} \frac{2e}{\Theta(n^{2n^{-1}+1})} = \frac{2e}{n} = 0.
 \]
 
+\subsubsection{}
+Is the function $\lceil \lg n \rceil!$ polynomially bounded? Is the function 
+$\lceil \lg \lg n \rceil!$ polynomially bounded?
 
+\subsubsection{}
+Which is asymptotically larger: $\lg(\lg* n)$ or $\lg*(\lg n)$?
 
+\subsubsection{}
+Show that the golden ratio $\phi$ and its $\widehat{\phi}$ both
+satify the equation $x^2 = x + 1$.
 
+We can show this by using the quadratic formula: 
+\begin{alignat*}{1}
+    x_{1,2} &= \frac{1}{2} \pm \sqrt{{-\frac{1}{2}}^2 + 1}\\
+             &= \frac{1}{2} \pm \sqrt{\frac{5}{4}}\\
+             &= \frac{1}{2} \pm \frac{\sqrt{5}}{2}\\
+\end{alignat*}
+Therefore the first solution to the equation is $\frac{1-\sqrt{5}}{2} = \widehat{\phi}$
+and the second is $\frac{1+\sqrt{5}}{2} = \phi$.
 
+\subsubsection{}
+Prove by induction that the $i$th Fibonacci number satisfies the 
+equality
+\[
+    F_i = \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}},
+\]
+where $\phi$ is the golden ratio and $\widehat{\phi}$ is its conjugate.
+
+First we show that it holds for $i=1$ and $i=2$.
+\begin{alignat*}{1}
+    F_1 &= \frac{\phi^1 - \widehat{\phi^1}}{\sqrt{5}}\\
+        &= \frac{\frac{1+\sqrt{5}}{2} - \frac{1-\sqrt{5}}{2}}{\sqrt{5}}\\
+        &= \frac{1+\sqrt{5} - (1-\sqrt{5})} {2\sqrt{5}}\\
+        &= \frac{2\sqrt{5}} {2\sqrt{5}} = 1
+\end{alignat*}
+\begin{alignat*}{1}
+    F_2 &= \frac{\phi^2 - \widehat{\phi^2}} {\sqrt{5}}\\
+        &= \frac{(\frac{1+\sqrt{5}}{2})^2 - (\frac{1-\sqrt{5}}{2})^2} {\sqrt{5}}\\
+        &= \frac{(1+\sqrt{5})^2 - (1-\sqrt{5})^2} {4\sqrt{5}}\\
+        &= \frac{1+2\sqrt{5}+5 - (1-2\sqrt{5}+5)} {4\sqrt{5}}\\
+        &= \frac{4\sqrt{5}} {4\sqrt{5}} = 1\\
+\end{alignat*}
+Now assuming that the equality holds for $F_{i-2}$ and $F_{i-1}$, we 
+will show that it also holds for $F_i$ by showing that $F_i = F_{i-2} + F_{i-1}$
+as this is the property of the Fibonacci sequence.
+\begin{alignat*}{1}
+    && F_i &= F_{i-2} + F_{i-1}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^{i-2} - \widehat{\phi}^{i-2}}{\sqrt{5}}
+            +  \frac{\phi^{i-1} - \widehat{\phi}^{i-1}}{\sqrt{5}}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^{i-2} - \widehat{\phi}^{i-2}
+            + \phi^{i-1} - \widehat{\phi}^{i-1}} {\sqrt{5}}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^{i-1} + \phi^{i-2} - \widehat{\phi}^{i-1}
+             - \widehat{\phi}^{i-2}} {\sqrt{5}}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^{i-2} (\phi^{1} + 1) 
+            - \widehat{\phi}^{i-2}(\widehat{\phi}^{1}+1)} {\sqrt{5}}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^{i-2} (\phi^2) 
+            - \widehat{\phi}^{i-2}(\widehat{\phi}^2)} {\sqrt{5}}\\
+    \iff&& \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}
+            &= \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}\\
+\end{alignat*}
 
 \end{document}

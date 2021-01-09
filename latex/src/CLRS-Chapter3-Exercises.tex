@@ -431,4 +431,73 @@ as this is the property of the Fibonacci sequence.
             &= \frac{\phi^i - \widehat{\phi^i}}{\sqrt{5}}\\
 \end{alignat*}
 
+\pagebreak
+\subsubsection{}
+Show that $k\ln k = \Theta(n)$ implies $k = \Theta\left(\frac{n}{\ln n}\right)$.\\
+
+If $k\ln k = \Theta(n)$, then given positive constants $c_1,c_2,n_0$, we have that
+\[
+    0 \leq c_1 n \leq k \ln k \leq c_2 n,
+\]
+is true for all $n \geq n_0$. Now suppose that $k = \frac{n}{\ln n} = \Theta(\frac{n}{\ln n})$.
+When substituting in the above equation we get 
+\[
+    0 \leq c_1 n \leq \frac{n}{\ln n} \ln \left(\frac{n}{\ln n}\right) \leq c_2 n.
+\]
+If we can show that this equation holds for the given constants, we see that 
+$k\ln k = \Theta(n)$ does indeed imply $k = \Theta\left(\frac{n}{\ln n}\right)$.\\
+Let $f(n) := \frac{n}{\ln n} \ln \left(\frac{n}{\ln n}\right)$. We will first show that
+$f(n) \in O(n)$. To show this we need constants $c_2, n_0$ such that 
+\[
+    0 \leq f(n) \leq c_2 n,
+\]
+for all $n\geq n_0$.
+\begin{alignat*}{2}
+    && 0 \leq f(n) \leq c_2 n\\
+    \iff&& \frac{n}{\ln n} \ln \left(\frac{n}{\ln n}\right)  \leq c_2 n\\
+    \iff&& \frac{n}{\ln n} \cdot \left( \ln n - \ln \ln n\right) \leq c_2 n\\
+    \iff&& n -\frac{n}{\ln n} \ln \ln n \leq c_2 n\\
+\end{alignat*}
+This holds for $c_2 = 1$ as long as $\frac{n}{\ln n} \ln \ln n$ is nonnegative.
+So we either must have that both $\frac{n}{\ln n}$ and $\ln\ln n$ are negative, or that
+both are positive. Since $n$ is always nonnegative, $\ln n$ must be negative for $\frac{n}{\ln n}$
+to be negative, and $\ln n$ is negative for $n \in (0,1)$. On the other hand we have that $\ln \ln n$
+is negative precisely when $0 < \ln n < 1$, which is true for $n \in (1, e)$. Thus both expressions can't 
+be negative at the same time and both must therefore be positive, which is true for $n \geq e$.\\ Thus
+$\frac{n}{\ln n} \ln \left(\frac{n}{\ln n}\right)  \leq c_2 n$ for $c_2 = 1$ and $n \geq n_0 = e$ and therefore
+$f(n) \in O(n)$.\\
+Now we will show that $f(n) \in \Omega(n)$ is true aswell. To show this we need constants $c_1, n_0$ such that
+\[
+    0 \leq c_1n \leq f(n),
+\]
+for all $n\geq n_0$.
+
+\begin{alignat*}{2}
+    && 0 \leq c_1 n \leq f(n) n\\
+    \iff&& c_2 n \leq n -\frac{n}{\ln n} \ln \ln n\\
+    \iff&& c_2 \leq 1 -\frac{1}{\ln n} \ln \ln n\\
+    \iff&& c_2 -1 \leq -\frac{1}{\ln n} \ln \ln n\\
+    \iff&& \frac{1}{\ln n} \ln \ln n \leq -c_2 + 1\\
+    \iff&& \frac{\ln \ln n}{\ln n}  \leq -c_2 + 1\\
+    \iff&& e^{\left(\frac{\ln \ln n}{\ln n}\right)}  \leq e^{(-c_2 + 1)}\\
+    \iff&& {(e^{\left(\ln \ln n\right)})}^{\frac{1}{\ln n}} \leq e^{(-c_2 + 1)}\\
+    \iff&& {(\ln n)}^{\frac{1}{\ln n}} \leq e^{(-c_2 + 1)}\\
+    \iff&& \ln n \leq {(e^{(-c_2 + 1)})}^\ln n\\
+    \iff&& \ln n \leq e^{(-c_2 + 1) \cdot \ln n}\\
+    \iff&& \ln n \leq e^{-c_2 \ln n + \ln n}\\
+    \iff&& \ln n \leq e^{-c_2 \ln n} n\\
+    \iff&& \ln n \leq n^{-c_2} n\\
+    \iff&& n \leq e^{n^{-c_2} n}\\
+    \iff&& n \leq e^{\frac{n}{n^{c_2}}}\\
+\end{alignat*}
+We have that 
+\[
+    \lim_{c_2 \to 0} e^{\frac{n}{n^{c_2}}} = e^{n},
+\]
+which shows that the inequality holds for small choices of $c_2$. It is not difficult to 
+show it for concrete values of $c_2$ by comparing an initial value and the gradients. 
+Therefore $f(n) = \frac{n}{\ln n} \ln \left(\frac{n}{\ln n}\right) \in \Omega(n)$. Since
+it also a member of $O(n)$ as we showed before, it follows that $f(n) \in \Theta(n)$ is true,
+which implies that $k = \frac{n}{\ln n} \in \Theta(\frac{n}{\ln n})$ is also true.
+
 \end{document}
